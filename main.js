@@ -25,7 +25,7 @@
     });
     
     /**dataLayer push vento de Page View */
-    $(document).ready(function(){
+    $(window).on('load', function(){
         var dataPageName = $('[data-page-name]').attr('data-page-name');
 
         dataLayer = [];
