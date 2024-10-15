@@ -24,7 +24,7 @@
         transition: function(url){ window.location.href = url; }
     });
     
-    /**dataLayer push vento de Page View */
+    /**dataLayer push evento de Page View */
     $(window).on('load', function(){
         var dataPageName = $('[data-page-name]').attr('data-page-name');
 
