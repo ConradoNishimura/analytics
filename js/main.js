@@ -24,6 +24,18 @@
         transition: function(url){ window.location.href = url; }
     });
     
+    /**dataLayer push vento de Page View */
+    $(window).on('load', function(){
+        var dataPageName = $('[data-page-name]').attr('data-page-name');
+
+        dataLayer = [];
+        dataLayer.push({
+            'event': 'page_view',
+            'pageName': dataPageName
+        })
+    })
+
+
     /*[ Back to top ]
     ===========================================================*/
     var windowH = $(window).height()/2;
