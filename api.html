@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Tag Manager API</title>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script>
+    // Autenticação do usuário com as permissões necessárias
+    function authenticate() {
+      return gapi.auth2.getAuthInstance()
+          .signIn({scope: "https://www.googleapis.com/auth/tagmanager.edit.containers https://www.googleapis.com/auth/tagmanager.readonly"})
+          .then(function() { console.log("Login bem-sucedido"); },
+                function(err) { console.error("Erro ao fazer login", err); });
+    }
+
+    // Carrega a API Client com a chave da API
+    function loadClient() {
+      gapi.client.setApiKey("AIzaSyBYDfBFoAZ7-O5pZmuEp5Toq_WoLqH0xz4"); // Insira sua API Key
+      return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/tagmanager/v2/rest")
+          .then(function() { console.log("Cliente GAPI carregado para API"); },
+                function(err) { console.error("Erro ao carregar cliente GAPI para API", err); });
+    }
+
+    // Função para executar a chamada de listagem de containers
+    function execute() {
+      return gapi.client.tagmanager.accounts.containers.list({
+        "parent": "accounts/6757062"
+        // Insira aqui os parâmetros necessários para a sua conta, como accountId
+      })
+          .then(function(response) {
+                  // Processa os resultados aqui (response.result contém o corpo parseado)
+                  console.log("Resposta", response);
+                },
+                function(err) { console.error("Erro na execução", err); });
+    }
+
+    // Inicializa o cliente de autenticação com o ID do cliente OAuth
+    gapi.load("client:auth2", function() {
+      gapi.auth2.init({client_id: "38473720361-jhf46bpa8tjduqi8onraa6bllcnn2vsi.apps.googleusercontent.com"}); // Insira seu Client ID OAuth
+    });
+  </script>
+</head>
+<body>
+  <h1>Google Tag Manager API</h1>
+  <button onclick="authenticate().then(loadClient)">Autorizar e Carregar</button>
+  <button onclick="execute()">Executar</button>
+</body>
+</html>
