@@ -2,6 +2,16 @@
 (function ($) {
     "use strict";
 
+    // Function to set a session cookie
+    function setSessionCookie(name, value) {
+        document.cookie = name + "=" + value + ";path=/";
+    }
+
+    // Example: Replace `userId` with the actual User ID variable
+    const userId = "12345"; // Replace with dynamic User ID
+    setSessionCookie("account_id", userId); // Cookie will last until the browser is closed
+
+
     /*[ Load page ]
     ===========================================================*/
     $(".animsition").animsition({
@@ -24,18 +34,6 @@
         transition: function(url){ window.location.href = url; }
     });
     
-    /**dataLayer push evento de Page View */
-    $(window).on('load', function(){
-        var dataPageName = $('[data-page-name]').attr('data-page-name');
-
-        dataLayer = [];
-        dataLayer.push({
-            'event': 'page_view',
-            'pageName': dataPageName
-        })
-    })
-
-
     /*[ Back to top ]
     ===========================================================*/
     var windowH = $(window).height()/2;
@@ -289,6 +287,417 @@
         $('.js-modal1').removeClass('show-modal1');
     });
 
+    //DataLayer Push
+        /**dataLayer push evento de Page View 
+         $(window).on('load', function(){
+ //           if ($('footer').length) { // Assuming your footer has a <footer> tag
+ //           var dataPageName = $('[data-page-name]').attr('data-page-name');
+    
+             dataLayer = [];
+             dataLayer.push({
+ //                'event': 'identification',
+                 'userId': '12345678',
+             })
+ //        }else {
+ //            console.warn("footer element not found");
+ //        }
+ })
 
+        /**dataLayer push evento de Select Content */
+        $(document).ready(function() {
+            // Listen for clicks on any <a> element with data-gtm-type="click"
+            $('a[data-gtm-type="click"], button[data-gtm-type="click"], div[data-gtm-type="click"]').on('click', function() {
+                // Get the values of data-gtm-name and data-clicktype from the clicked element
+                var gtmName = $(this).attr('data-gtm-name');
+                var gtmClickType = $(this).attr('data-gtm-clicktype');
+                var gtmType = $(this).attr('data-gtm-type');
+                var gtmPage = $(this).attr('data-gtm-page');
+        
+                // Push to dataLayer
+                dataLayer = dataLayer || [];  // Initialize dataLayer if it doesn't exist
+                dataLayer.push({
+                    'event': 'select_content',
+                    'page_type': gtmPage,
+                    'status_login': 'nao logado', //dev por favor retire
+                    'interaction_detail': gtmName,
+                    'ev_action': gtmType + ':' + gtmClickType + ':' + gtmName
+                });
+            });
+        });
 
+        /**dataLayer push evento de newsletter generate */
+        $(document).ready(function() {
+            // Listen for clicks on any <a> element with data-gtm-type="register"
+            $('button[data-gtm-type="register"]').on('click', function() {
+                // Get the values of data-gtm-name and data-clicktype from the clicked element
+                var gtmName = $(this).attr('data-gtm-name');
+                var clickType = $(this).attr('data-gtm-clicktype');
+                var gtmType = $(this).attr('data-gtm-type');
+                var gtmPage = $(this).attr('data-gtm-page');
+
+        
+                // Push to dataLayer
+                dataLayer = dataLayer || [];  // Initialize dataLayer if it doesn't exist
+                dataLayer.push({
+                    'event': 'newsletter_generate',
+                    'page_type': gtmPage,
+                    'ev_action': gtmType + ':' + clickType + ':' + gtmName,
+                    'status_login': 'nao-logado'
+                });
+            });
+        });
+
+        // $(document).ready(function() {
+
+        //     // Listen for clicks on any <a> element with data-gtm-type="register"
+        //     $('button[data-gtm-type="view"]').on('click', function() {
+        //         // Get the values of data-gtm-name and data-clicktype from the clicked element
+        //         var gtmName = $(this).attr('data-gtm-name');
+        //         var clickType = $(this).attr('data-gtm-clicktype');
+        //         var gtmType = $(this).attr('data-gtm-type');
+        //         var gtmListName = $(this).attr('data-gtm-item-list-name');
+
+        
+        //         // Push to dataLayer
+        //         dataLayer = dataLayer || [];  // Initialize dataLayer if it doesn't exist
+        //         dataLayer.push({
+        //             'event': 'view_item_list',
+        //             'eventAction': 'view_item_list',
+        //             'eventCategory': gtmName + ':ecommerce',
+        //             'ecommerce': {
+        //                 'impressions':[{
+        //                     'marca': 'coza-mulher',
+        //                     'id': 'id',
+        //                     'list': gtmName,
+        //                     'name': 'nome do produto',
+        //                     'preco': 'preco do produto'
+        //                 },
+        //                 {
+        //                     'marca': 'coza-mulher',
+        //                     'id': 'id',
+        //                     'list': gtmName,
+        //                     'name': 'nome do produto',
+        //                     'preco': 'preco do produto'
+        //                 },
+        //                 {
+        //                     'marca': 'coza-mulher',
+        //                     'id': 'id',
+        //                     'list': gtmName,
+        //                     'name': 'nome do produto',
+        //                     'preco': 'preco do produto'
+        //                 },
+        //                 {
+        //                     'marca': 'coza-mulher',
+        //                     'id': 'id',
+        //                     'list': gtmName,
+        //                     'name': 'nome do produto',
+        //                     'preco': 'preco do produto'
+        //                 },
+        //         ]
+
+        //             }
+        //         });
+        //     });
+        // });
+
+        /**dataLayer push evento de view_item_list */
+        $(document).ready(function() {
+            // Listen for clicks on any button with data-gtm-type="view"
+            $('button[data-gtm-type="view"]').on('click', function() {
+                // Get the list name from the clicked element
+                var gtmListName = $(this).attr('data-gtm-item-list-name');
+                
+                // Initialize the impressions array
+                var impressions = [];
+                
+                // Loop through each product block and gather product data
+                $('.block2').each(function() {
+                    var productName = $(this).find('.js-name-b2').text().trim(); // Product name
+                    var productPrice = $(this).find('.stext-105').text().trim();  // Product price
+                    var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
+                    var productBrand = $(this).attr('data-gtm-marca');
+                    var productList = $(this).attr('data-gtm-list');
+
+                    // Push product data to the impressions array
+                    impressions.push({
+                        'brand': productBrand,       // Static brand name
+                        'id': productId,              // Product ID
+                        'list': productList,          // List name from the clicked element
+                        'item_name': productName,          // Product name
+                        'price': productPrice         // Product price
+                    });
+                });
+        
+                // Push to dataLayer
+                dataLayer = dataLayer || [];  // Initialize dataLayer if it doesn't exist
+                dataLayer.push({
+                    'event': 'view_item_list',
+                    impressions  // Dynamic impressions array
+
+                
+                });
+            });
+        });
+
+        // $(document).ready(function() {
+        //     // Listen for clicks on any button with data-gtm-type="view"
+        //     $('section[data-gtm-load="productDetail"]').on('load', function() {
+        //         // Get the list name from the clicked element
+        //         var gtmListName = $(this).attr('data-gtm-item-list-name');
+                
+        //         // Initialize the impressions array
+        //         var impressions = [];
+                
+        //         // Loop through each product block and gather product data
+        //         $('.sec-product-detail').each(function() {
+        //             var productName = $(this).find('.js-name-detail').text().trim(); // Product name
+        //             var productPrice = $(this).find('.mtext-106').text().trim();  // Product price
+        //             var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
+        //             var productBrand = $(this).attr('data-gtm-marca');
+        
+        //             // Push product data to the impressions array
+        //             product.push({
+        //                 'marca': productBrand,       // Static brand name
+        //                 'id': productId,              // Product ID
+        //                 'category': gtmListName,          // List name from the clicked element
+        //                 'name': productName,          // Product name
+        //                 'preco': productPrice         // Product price
+        //             });
+        //         });
+        
+        //         // Push to dataLayer
+        //         dataLayer = dataLayer || [];  // Initialize dataLayer if it doesn't exist
+        //         dataLayer.push({
+        //             'event': 'view_item',
+        //             'eventAction': 'view_item',
+        //             'eventCategory': 'nome do item' + ':ecommerce',
+        //             'ecommerce': {
+        //                 'product': product  // Dynamic impressions array
+        //             }
+        //         });
+        //     });
+        // });
+        
+        /**dataLayer push evento de view_item */ 
+        document.addEventListener("DOMContentLoaded", function() {
+            // Select the <section> element with the attribute 'data-gtm-load="productDetail"'
+            const targetSection = document.querySelector('.sec-product-detail');
+            
+            // Check if IntersectionObserver is supported
+            if (targetSection && 'IntersectionObserver' in window) {
+                // Create a new observer instance
+                let observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        // Check if the section is in view
+                        if (entry.isIntersecting) {
+                            // Get the list name from the section element
+                            //var gtmListName = targetSection.getAttribute('data-gtm-item-list-name');
+                            
+                            // Initialize the impressions array
+                            var product = [];
+                            
+                            // Loop through each product block and gather product data
+                            $('.sec-product-detail').each(function() {
+                                var productName = $(this).find('.js-name-detail').text().trim(); // Product name
+                                var productPrice = $(this).find('.mtext-106').text().trim();  // Product price
+                                var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
+                                var productBrand = $(this).attr('data-gtm-marca');
+        
+                                // Push product data to the impressions array
+                                product.push({
+                                    'brand': productBrand,        // Brand name
+                                    'id': productId,              // Product ID
+                                    'category': 'homem',      // Category name
+                                    'item_name': productName,          // Product name
+                                    'price': productPrice         // Product price
+                                });
+                            });
+        
+                            // Push to dataLayer
+                            dataLayer = dataLayer || [];
+                            dataLayer.push({
+                                'event': 'view_item',
+                                'value': productPrice,
+                                'currency': 'BRL',
+                                'products': product  // Dynamic impressions array
+                            });
+        
+                            // Stop observing the section after the event is pushed
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 }); // Trigger when 50% of the section is visible
+        
+                // Start observing the target section
+                observer.observe(targetSection);
+            } else {
+                console.warn("IntersectionObserver is not supported or the section was not found.");
+            }
+        });
+        
+        //add to cart
+        $(document).ready(function() {
+            $('button[data-gtm-type="add-to-cart"]').on('click', function() {
+                var items = [];
+                $('.sec-product-detail').each(function() {
+                    var productName = $(this).find('.js-name-detail').text().trim(); // Product name
+                    var productPrice = $(this).find('.mtext-106').text().trim();  // Product price
+                    var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
+                    var productBrand = $(this).attr('data-gtm-marca');
+                    // Push product data to the impressions array
+                    items.push({
+                        'brand': productBrand,        // Brand name
+                        'id': productId,              // Product ID
+                        'category': 'homem',      // Category name
+                        'item_name': productName,          // Product name
+                        'price': productPrice         // Product price
+                    });
+                });
+                
+                // Push to dataLayer
+                    // Push to dataLayer
+                    dataLayer = dataLayer || [];
+                    dataLayer.push({
+                        'event': 'add_to_cart',
+                        items  // Dynamic impressions array
+                 });
+            });
+        });
+
+        //add to wishlist
+        $(document).ready(function() {
+            $('.btn-addwish-b2').on('click', function() {
+                var items = [];
+
+                    var productName = $(this).find('.js-name-detail').text().trim(); // Product name
+                    var productPrice = $(this).find('.mtext-106').text().trim();  // Product price
+                    var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
+                    var productBrand = $(this).attr('data-gtm-marca');
+                    // Push product data to the impressions array
+                    items.push({
+                        'brand': 'coza-mulher',        // Brand name
+                        'id': '12',              // Product ID
+                        'category': 'mulher',      // Category name
+                        'item_name': 'shirt',          // Product name
+                        'price': '16.00'         // Product price
+                    });
+                
+                // Push to dataLayer
+                    // Push to dataLayer
+                    dataLayer = dataLayer || [];
+                    dataLayer.push({
+                        'event': 'add_to_wishlist',
+                        items  // Dynamic impressions array
+                 });
+            });
+        });
+
+        //view cart ou checkout
+        document.addEventListener("DOMContentLoaded", function() {
+            // Select the <form> element with the attribute class="shopping-cart"'
+            const targetSection = document.querySelector('.shopping-cart');
+            
+            // Check if IntersectionObserver is supported
+            if (targetSection && 'IntersectionObserver' in window) {
+                // Create a new observer instance
+                let observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        // Check if the section is in view
+                        if (entry.isIntersecting) {
+                            // Initialize the impressions array
+                            var items = [];
+                            
+                            // Loop through each product table_row and gather product data
+                            $('.table_row').each(function() {
+                                var productName = $(this).find('.column-2').text().trim(); // Product name
+                                var productPrice = $(this).find('.column-3').text().trim();  // Product price
+                                var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
+                                var productBrand = $(this).attr('data-gtm-marca');
+        
+                                // Push product data to the impressions array
+                                items.push({
+                                    'brand': productBrand,        // Brand name
+                                    'id': productId,              // Product ID
+                                    'category': 'homem',      // Category name
+                                    'item_name': productName,          // Product name
+                                    'price': productPrice         // Product price
+                                });
+                            });
+        
+                            // Push to dataLayer
+                            dataLayer = dataLayer || [];
+                            dataLayer.push({
+                                'event': 'view_cart',
+                                'value': '79.65',
+                                'currency': 'BRL',
+                                'items': items  // Dynamic impressions array
+                                
+                            });
+        
+                            // Stop observing the section after the event is pushed
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 }); // Trigger when 50% of the section is visible
+        
+                // Start observing the target section
+                observer.observe(targetSection);
+            } else {
+                console.warn("IntersectionObserver is not supported or the section was not found.");
+            }
+        });
+
+        //purchase
+        document.addEventListener("DOMContentLoaded", function() {
+            // Select the <form> element with the attribute class="shopping-cart"'
+            const targetSection = document.querySelector('section[data-gtm-load="purchase"]');
+            
+            // Check if IntersectionObserver is supported
+            if (targetSection && 'IntersectionObserver' in window) {
+                // Create a new observer instance
+                let observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        // Check if the section is in view
+                        if (entry.isIntersecting) {
+
+                            // Push to dataLayer
+                            dataLayer = dataLayer || [];
+                            dataLayer.push({
+                                'event': 'purchase',
+                                'transaction_id': '09872',
+                                'value': '79.65',
+                                'tax': '10.65',
+                                'frete': '5.65',
+                                'currency': 'BRL',
+                                'items': [
+                                        {
+                                        'category': 'homem',
+                                        'id': '2',
+                                        'brand': 'coza-mulher',
+                                        'item_name':'Fresh Strawberries',
+                                        'price': '$ 36.00'
+                                        },
+                                        {
+                                         'category': 'homem',
+                                         'id': '7',
+                                         'brand': 'coza-homem',
+                                         'item_name':'"Lightweight Jacket"',
+                                         'price': '$ 16.00'   
+                                        }
+                                    ] 
+                                
+                            });
+        
+                            // Stop observing the section after the event is pushed
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 }); // Trigger when 50% of the section is visible
+        
+                // Start observing the target section
+                observer.observe(targetSection);
+            } else {
+                console.warn("IntersectionObserver is not supported or the section was not found.");
+            }
+        });
 })(jQuery);
