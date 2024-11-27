@@ -7,9 +7,13 @@
         document.cookie = name + "=" + value + ";path=/";
     }
 
-    // Example: Replace `userId` with the actual User ID variable
-    const userId = "12345"; // Replace with dynamic User ID
-    setSessionCookie("account_id", userId); // Cookie will last until the browser is closed
+    // Generate a random User ID
+    function generateRandomUserId() {
+        return 'user_' + Math.random().toString(36).substr(2, 9); // Example: user_a1b2c3d4e
+    }
+
+    const userId = generateRandomUserId(); // Generate random User ID
+    setSessionCookie("account_id", userId); // Store it in a session cookie
 
 
     /*[ Load page ]
@@ -302,8 +306,9 @@
  //            console.warn("footer element not found");
  //        }
  })
+ */
 
-        /**dataLayer push evento de Select Content */
+ //dataLayer push evento de Select Content 
         $(document).ready(function() {
             // Listen for clicks on any <a> element with data-gtm-type="click"
             $('a[data-gtm-type="click"], button[data-gtm-type="click"], div[data-gtm-type="click"]').on('click', function() {
@@ -318,7 +323,7 @@
                 dataLayer.push({
                     'event': 'select_content',
                     'page_type': gtmPage,
-                    'status_login': 'nao logado', //dev por favor retire
+                //    'status_login': 'nao logado', //dev por favor retire
                     'interaction_detail': gtmName,
                     'ev_action': gtmType + ':' + gtmClickType + ':' + gtmName
                 });
@@ -342,7 +347,7 @@
                     'event': 'newsletter_generate',
                     'page_type': gtmPage,
                     'ev_action': gtmType + ':' + clickType + ':' + gtmName,
-                    'status_login': 'nao-logado'
+                //    'status_login': 'nao-logado'
                 });
             });
         });
@@ -419,10 +424,10 @@
                     var productList = $(this).attr('data-gtm-list');
 
                     // Push product data to the impressions array
-                    impressions.push({
-                        'brand': productBrand,       // Static brand name
-                        'id': productId,              // Product ID
-                        'list': productList,          // List name from the clicked element
+                    items.push({
+                        'item_brand': productBrand,       // Static brand name
+                        'item_id': productId,              // Product ID
+                        'item_list_name': productList,          // List name from the clicked element
                         'item_name': productName,          // Product name
                         'price': productPrice         // Product price
                     });
@@ -432,7 +437,7 @@
                 dataLayer = dataLayer || [];  // Initialize dataLayer if it doesn't exist
                 dataLayer.push({
                     'event': 'view_item_list',
-                    impressions  // Dynamic impressions array
+                    items  // Dynamic impressions array
 
                 
                 });
@@ -502,12 +507,13 @@
                                 var productPrice = $(this).find('.mtext-106').text().trim();  // Product price
                                 var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
                                 var productBrand = $(this).attr('data-gtm-marca');
+                                var productCategory = $(this).attr('data-gtm-item-category');
         
                                 // Push product data to the impressions array
                                 product.push({
-                                    'brand': productBrand,        // Brand name
-                                    'id': productId,              // Product ID
-                                    'category': 'homem',      // Category name
+                                    'item_brand': productBrand,        // Brand name
+                                    'item_id': productId,              // Product ID
+                                    'item_category': productCategory,      // Category name
                                     'item_name': productName,          // Product name
                                     'price': productPrice         // Product price
                                 });
@@ -544,11 +550,13 @@
                     var productPrice = $(this).find('.mtext-106').text().trim();  // Product price
                     var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
                     var productBrand = $(this).attr('data-gtm-marca');
+                    var productCategory = $(this).attr('data-gtm-item-category');
+
                     // Push product data to the impressions array
                     items.push({
-                        'brand': productBrand,        // Brand name
-                        'id': productId,              // Product ID
-                        'category': 'homem',      // Category name
+                        'item_brand': productBrand,        // Brand name
+                        'item_id': productId,              // Product ID
+                        'item_category': productCategory,      // Category name
                         'item_name': productName,          // Product name
                         'price': productPrice         // Product price
                     });
@@ -575,9 +583,9 @@
                     var productBrand = $(this).attr('data-gtm-marca');
                     // Push product data to the impressions array
                     items.push({
-                        'brand': 'coza-mulher',        // Brand name
-                        'id': '12',              // Product ID
-                        'category': 'mulher',      // Category name
+                        'item_brand': 'coza-mulher',        // Brand name
+                        'item_id': '12',              // Product ID
+                        'item_category': 'mulher',      // Category name
                         'item_name': 'shirt',          // Product name
                         'price': '16.00'         // Product price
                     });
@@ -616,9 +624,9 @@
         
                                 // Push product data to the impressions array
                                 items.push({
-                                    'brand': productBrand,        // Brand name
-                                    'id': productId,              // Product ID
-                                    'category': 'homem',      // Category name
+                                    'item_brand': productBrand,        // Brand name
+                                    'item_id': productId,              // Product ID
+                                    'item_category': 'homem',      // Category name
                                     'item_name': productName,          // Product name
                                     'price': productPrice         // Product price
                                 });
@@ -674,14 +682,14 @@
                                         'category': 'homem',
                                         'id': '2',
                                         'brand': 'coza-mulher',
-                                        'item_name':'Fresh Strawberries',
+                                        'item_name':'Casaco Fresh Strawberries',
                                         'price': '$ 36.00'
                                         },
                                         {
                                          'category': 'homem',
                                          'id': '7',
                                          'brand': 'coza-homem',
-                                         'item_name':'"Lightweight Jacket"',
+                                         'item_name':'Jaqueta Lightweight Jacket',
                                          'price': '$ 16.00'   
                                         }
                                     ] 
