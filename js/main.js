@@ -2,9 +2,20 @@
 (function ($) {
     "use strict";
 
-    // Function to set a session cookie
     function setSessionCookie(name, value) {
         document.cookie = name + "=" + value + ";path=/";
+    }
+
+    // Function to get a cookie value by name
+    function getCookie(name) {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + "=")) {
+                return cookie.substring((name + "=").length);
+            }
+        }
+        return null; // Return null if the cookie doesn't exist
     }
 
     // Generate a random User ID
@@ -12,9 +23,15 @@
         return 'user_' + Math.random().toString(36).substr(2, 9); // Example: user_a1b2c3d4e
     }
 
-    const userId = generateRandomUserId(); // Generate random User ID
-    setSessionCookie("account_id", userId); // Store it in a session cookie
-
+    // Check if the 'account_id' cookie exists, otherwise set it
+    let userId = getCookie("account_id");
+    if (!userId) {
+        userId = generateRandomUserId();
+        setSessionCookie("account_id", userId); // Set a new session cookie
+        console.log("New User ID generated and stored in cookie: " + userId);
+    } else {
+        console.log("Existing User ID retrieved from cookie: " + userId);
+    }
 
     /*[ Load page ]
     ===========================================================*/
