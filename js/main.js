@@ -433,7 +433,7 @@
                 var items = [];
                 
                 // Loop through each product block and gather product data
-                $('.block2').each(function() {
+                $('.block2:visible').each(function() {
                     var productName = $(this).find('.js-name-b2').text().trim(); // Product name
                     var productPrice = $(this).find('.stext-105').text().trim();  // Product price
                     var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
@@ -448,6 +448,8 @@
                         'item_name': productName,          // Product name
                         'price': productPrice         // Product price
                     });
+                    console.log('Processing product:', $(this).find('.js-name-b2').text().trim());
+
                 });
         
                 // Push to dataLayer
