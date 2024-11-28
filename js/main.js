@@ -430,7 +430,7 @@
                 var gtmListName = $(this).attr('data-gtm-item-list-name');
                 
                 // Initialize the impressions array
-                var impressions = [];
+                var items = [];
                 
                 // Loop through each product block and gather product data
                 $('.block2').each(function() {
