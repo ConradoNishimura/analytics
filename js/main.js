@@ -676,8 +676,8 @@
 
         //purchase
         document.addEventListener("DOMContentLoaded", function() {
-            // Select the <form> element with the attribute class="shopping-cart"'
-            const targetSection = document.querySelector('section[data-gtm-load="purchase"]');
+            // Select the <form> element with the attribute class="shopping-cart"'section[data-gtm-load="purchase"]
+            const targetSection = document.querySelector('.purchase');
             
             // Check if IntersectionObserver is supported
             if (targetSection && 'IntersectionObserver' in window) {
