@@ -675,7 +675,7 @@
         });
 
         
-/*         //purchase no page view
+        //purchase no page view
         document.addEventListener("DOMContentLoaded", function() {
             // Select the <form> element with the attribute class="shopping-cart"'section[data-gtm-load="purchase"]
             const targetSection = document.querySelector('.purchase');
@@ -691,7 +691,8 @@
                             // Push to dataLayer
                             dataLayer = dataLayer || [];
                             dataLayer.push({
-                                'transaction_id': '09872',
+                                'event': 'purchase',
+                                'transaction_id': generateTransactionId(),
                                 'value': '79.65',
                                 'tax': '10.65',
                                 'frete': '5.65',
@@ -714,7 +715,11 @@
                                     ] 
                                 
                             });
-        
+                            function generateTransactionId() {
+                                const timestamp = Date.now(); // Current timestamp in milliseconds
+                                const randomNumber = Math.floor(Math.random() * 100000); // Random 5-digit number
+                                return `${timestamp}-${randomNumber}`;
+                            }
                             // Stop observing the section after the event is pushed
                             observer.unobserve(entry.target);
                         }
@@ -726,9 +731,9 @@
             } else {
                 console.warn("IntersectionObserver is not supported or the section was not found.");
             }
-        }); */
+        });
                 
-        //purchase no page view
+/*         //purchase no page view
         document.addEventListener("DOMContentLoaded", function() {
             // Select the <form> element with the attribute class="shopping-cart"'section[data-gtm-load="purchase"]
             const targetSection = document.querySelector('.purchase');
@@ -766,7 +771,7 @@
                                     ] 
                                 
                             });
-                            
+
                             function generateTransactionId() {
                                 const timestamp = Date.now(); // Current timestamp in milliseconds
                                 const randomNumber = Math.floor(Math.random() * 100000); // Random 5-digit number
@@ -776,5 +781,5 @@
                 // Start observing the target section
                 observer.observe(targetSection);
 
-        });
+        }); */
 })(jQuery);
