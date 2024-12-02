@@ -676,7 +676,6 @@
 
         
 /*         //purchase no page view
-
         document.addEventListener("DOMContentLoaded", function() {
             // Select the <form> element with the attribute class="shopping-cart"'section[data-gtm-load="purchase"]
             const targetSection = document.querySelector('.purchase');
@@ -692,7 +691,6 @@
                             // Push to dataLayer
                             dataLayer = dataLayer || [];
                             dataLayer.push({
-                                'event': 'purchase',
                                 'transaction_id': '09872',
                                 'value': '79.65',
                                 'tax': '10.65',
@@ -729,41 +727,54 @@
                 console.warn("IntersectionObserver is not supported or the section was not found.");
             }
         }); */
-        
-        
-        //purchase no clique
-        $(document).ready(function() {
-            // Listen for clicks on any <a> element with data-gtm-type="register"
-            $('button[data-gtm-type="checkout"]').on('click', function() {
-                // Get the values of data-gtm-name and data-clicktype from the clicked element
-                // Push to dataLayer
-                // Push to dataLayer
-                dataLayer = dataLayer || [];
-                dataLayer.push({
-                    'event': 'purchase',
-                    'transaction_id': '09872',
-                    'value': '79.65',
-                    'tax': '10.65',
-                    'frete': '5.65',
-                    'currency': 'BRL',
-                    'items': [
-                            {
-                            'category': 'homem',
-                            'id': '2',
-                            'brand': 'coza-mulher',
-                            'item_name':'Casaco Fresh Strawberries',
-                            'price': '$ 36.00'
-                             },
-                            {
-                                'category': 'homem',
-                                'id': '7',
-                                'brand': 'coza-homem',
-                                'item_name':'Jaqueta Lightweight Jacket',
-                                'price': '$ 16.00'   
+                
+        //purchase no page view
+        document.addEventListener("DOMContentLoaded", function() {
+            // Select the <form> element with the attribute class="shopping-cart"'section[data-gtm-load="purchase"]
+            const targetSection = document.querySelector('.purchase');
+            
+            // Check if IntersectionObserver is supported
+
+                
+
+                        // Check if the section is in view
+               
+
+                            // Push to dataLayer
+                            dataLayer = dataLayer || [];
+                            dataLayer.push({
+                                'transaction_id': generateTransactionId(),
+                                'value': '79.65',
+                                'tax': '10.65',
+                                'frete': '5.65',
+                                'currency': 'BRL',
+                                'items': [
+                                        {
+                                        'category': 'homem',
+                                        'id': '2',
+                                        'brand': 'coza-mulher',
+                                        'item_name':'Casaco Fresh Strawberries',
+                                        'price': '$ 36.00'
+                                        },
+                                        {
+                                         'category': 'homem',
+                                         'id': '7',
+                                         'brand': 'coza-homem',
+                                         'item_name':'Jaqueta Lightweight Jacket',
+                                         'price': '$ 16.00'   
+                                        }
+                                    ] 
+                                
+                            });
+                            
+                            function generateTransactionId() {
+                                const timestamp = Date.now(); // Current timestamp in milliseconds
+                                const randomNumber = Math.floor(Math.random() * 100000); // Random 5-digit number
+                                return `${timestamp}-${randomNumber}`;
                             }
-                        ] 
-                     
-                });
-            });
+
+                // Start observing the target section
+                observer.observe(targetSection);
+
         });
 })(jQuery);
