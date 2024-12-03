@@ -444,8 +444,8 @@
                     items.push({
                         'item_brand': productBrand,       // Static brand name
                         'item_id': productId,              // Product ID
-                        'item_list_name': productList,          // List name from the clicked element
                         'item_name': productName,          // Product name
+                        'item_list_name': productList,          // List name from the clicked element
                         'price': productPrice         // Product price
                     });
                     console.log('Processing product:', $(this).find('.js-name-b2').text().trim());
@@ -456,6 +456,7 @@
                 dataLayer = dataLayer || [];  // Initialize dataLayer if it doesn't exist
                 dataLayer.push({
                     'event': 'view_item_list',
+                    'item_list_name': productList,          // List name from the clicked element
                     items  // Dynamic impressions array
 
                 
@@ -523,18 +524,17 @@
                             // Loop through each product block and gather product data
                             $('.sec-product-detail').each(function() {
                                 var productName = $(this).find('.js-name-detail').text().trim(); // Product name
-                                var productPrice = $(this).find('.mtext-106').text().trim();  // Product price
-                                var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
+                            //    var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
                                 var productBrand = $(this).attr('data-gtm-marca');
                                 var productCategory = $(this).attr('data-gtm-item-category');
         
                                 // Push product data to the impressions array
                                 product.push({
                                     'item_brand': productBrand,        // Brand name
-                                    'item_id': productId,              // Product ID
+                                    'item_id': 'PRO_8',              // Product ID
                                     'item_category': productCategory,      // Category name
                                     'item_name': productName,          // Product name
-                                    'price': productPrice         // Product price
+                                    'price': 58.79         // Product price
                                 });
                             });
         
@@ -542,9 +542,9 @@
                             dataLayer = dataLayer || [];
                             dataLayer.push({
                                 'event': 'view_item',
-                                'value': productPrice,
+                                'value': 58.79,
                                 'currency': 'BRL',
-                                'products': product  // Dynamic impressions array
+                                'items': product  // Dynamic impressions array
                             });
         
                             // Stop observing the section after the event is pushed
@@ -606,7 +606,7 @@
                         'item_id': '12',              // Product ID
                         'item_category': 'mulher',      // Category name
                         'item_name': 'shirt',          // Product name
-                        'price': '16.00'         // Product price
+                        'price': 16.00         // Product price
                     });
                 
                 // Push to dataLayer
@@ -655,7 +655,7 @@
                             dataLayer = dataLayer || [];
                             dataLayer.push({
                                 'event': 'view_cart',
-                                'value': '79.65',
+                                'value': 79.65,
                                 'currency': 'BRL',
                                 'items': items  // Dynamic impressions array
                                 
