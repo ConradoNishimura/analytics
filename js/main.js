@@ -454,6 +454,7 @@
         
                 // Push to dataLayer
                 dataLayer = dataLayer || [];  // Initialize dataLayer if it doesn't exist
+                dataLayer.push({ items: null });
                 dataLayer.push({
                     'event': 'view_item_list',
                     'item_list_name': productList,          // List name from the clicked element
@@ -540,6 +541,7 @@
         
                             // Push to dataLayer
                             dataLayer = dataLayer || [];
+                            dataLayer.push({ items: null });
                             dataLayer.push({
                                 'event': 'view_item',
                                 'value': 58.79,
@@ -654,6 +656,7 @@
         
                             // Push to dataLayer
                             dataLayer = dataLayer || [];
+                            dataLayer.push({ items: null });
                             dataLayer.push({
                                 'event': 'view_cart',
                                 'value': 79.65,
@@ -691,6 +694,7 @@
 
                             // Push to dataLayer
                             dataLayer = dataLayer || [];
+                            dataLayer.push({ items: null });
                             dataLayer.push({
                                 'event': 'purchase',
                                 'transaction_id': generateTransactionId(),
