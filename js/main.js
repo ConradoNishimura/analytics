@@ -640,12 +640,13 @@
                                 var productPrice = $(this).find('.column-3').text().trim();  // Product price
                                 var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
                                 var productBrand = $(this).attr('data-gtm-marca');
+                                var productCategory = $(this).attr('data-gtm-category')
         
                                 // Push product data to the impressions array
                                 items.push({
                                     'item_brand': productBrand,        // Brand name
                                     'item_id': productId,              // Product ID
-                                    'item_category': 'homem',      // Category name
+                                    'item_category': productCategory,      // Category name
                                     'item_name': productName,          // Product name
                                     'price': productPrice         // Product price
                                 });
@@ -693,24 +694,24 @@
                             dataLayer.push({
                                 'event': 'purchase',
                                 'transaction_id': generateTransactionId(),
-                                'value': '79.65',
-                                'tax': '10.65',
-                                'frete': '5.65',
+                                'value': 79.65,
+                                'tax': 10.65,
+                                'frete': 5.65,
                                 'currency': 'BRL',
                                 'items': [
                                         {
-                                        'category': 'homem',
-                                        'id': '2',
-                                        'brand': 'coza-mulher',
-                                        'item_name':'Casaco Fresh Strawberries',
-                                        'price': '$ 36.00'
+                                        'item_brand': "coza-muher",
+                                        'item_id': "2",
+                                        'item_category': "mulher",
+                                        'item_name': "Fresh Strawberries",
+                                        'price': 36.00
                                         },
                                         {
-                                         'category': 'homem',
-                                         'id': '7',
-                                         'brand': 'coza-homem',
-                                         'item_name':'Jaqueta Lightweight Jacket',
-                                         'price': '$ 16.00'   
+                                        'item_brand': "coza-homem",
+                                        'item_id': "7",
+                                        'item_category': "homem",
+                                        'item_name': "Lightweight Jacket",
+                                        'price': 16.00
                                         }
                                     ] 
                                 
