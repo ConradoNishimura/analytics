@@ -621,7 +621,7 @@
             });
         });
 
-        //view cart ou checkout
+        //view cart ou checkout colocar begin checkout
         document.addEventListener("DOMContentLoaded", function() {
             // Select the <form> element with the attribute class="shopping-cart"'
             const targetSection = document.querySelector('.shopping-cart');
@@ -634,35 +634,49 @@
                         // Check if the section is in view
                         if (entry.isIntersecting) {
                             // Initialize the impressions array
-                            var items = [];
+/*                             var items = []; */
                             
                             // Loop through each product table_row and gather product data
-                            $('.table_row').each(function() {
+/*                             $('.table_row').each(function() {
                                 var productName = $(this).find('.column-2').text().trim(); // Product name
                                 var productPrice = $(this).find('.column-3').text().trim();  // Product price
                                 var productId = $(this).attr('data-product-id') || 'unknown'; // Product ID (optional, if there's an ID attribute)
                                 var productBrand = $(this).attr('data-gtm-marca');
-                                var productCategory = $(this).attr('data-gtm-category')
+                                var productCategory = $(this).attr('data-gtm-category') */
         
                                 // Push product data to the impressions array
-                                items.push({
-                                    'item_brand': productBrand,        // Brand name
-                                    'item_id': productId,              // Product ID
-                                    'item_category': productCategory,      // Category name
-                                    'item_name': productName,          // Product name
-                                    'price': productPrice         // Product price
-                                });
-                            });
-        
-                            // Push to dataLayer
-                            dataLayer = dataLayer || [];
-                            dataLayer.push({ items: null });
-                            dataLayer.push({
-                                'event': 'view_cart',
-                                'value': 79.65,
-                                'currency': 'BRL',
-                                'items': items  // Dynamic impressions array
-                                
+/*                                     items.push({
+                                        'item_brand': productBrand,        // Brand name
+                                        'item_id': productId,              // Product ID
+                                        'item_category': productCategory,      // Category name
+                                        'item_name': productName,          // Product name
+                                        'price': productPrice         // Product price
+                                    });
+                                }); */
+            
+                                // Push to dataLayer
+                                dataLayer = dataLayer || [];
+                                dataLayer.push({ items: null });
+                                dataLayer.push({
+                                    'event': 'view_cart',
+                                    'value': 79.65,
+                                    'currency': 'BRL',
+                                    'items': [
+                                        {
+                                        'item_brand': "coza-muher",
+                                        'item_id': "2",
+                                        'item_category': "mulher",
+                                        'item_name': "Fresh Strawberries",
+                                        'price': 36.00
+                                        },
+                                        {
+                                        'item_brand': "coza-homem",
+                                        'item_id': "7",
+                                        'item_category': "homem",
+                                        'item_name': "Lightweight Jacket",
+                                        'price': 16.00
+                                        }
+                                    ]                                 
                             });
         
                             // Stop observing the section after the event is pushed
