@@ -722,14 +722,16 @@
                                         'item_id': "2",
                                         'item_category': "mulher",
                                         'item_name': "Fresh Strawberries",
-                                        'price': 36.00
+                                        'price': 36.00,
+                                        'quantity': 1
                                         },
                                         {
                                         'item_brand': "coza-homem",
                                         'item_id': "7",
                                         'item_category': "homem",
                                         'item_name': "Lightweight Jacket",
-                                        'price': 16.00
+                                        'price': 16.00,
+                                        'quantity': 1
                                         }
                                     ] 
                                 
