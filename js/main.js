@@ -445,7 +445,7 @@
                         'item_brand': productBrand,       // Static brand name
                         'item_id': productId,              // Product ID
                         'item_name': productName,          // Product name
-                        'item_list_name': productList,          // List name from the clicked element
+                        'item_list_name': 'productList',          // List name from the clicked element
                         'price': productPrice         // Product price
                     });
                     console.log('Processing product:', $(this).find('.js-name-b2').text().trim());
