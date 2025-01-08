@@ -457,7 +457,7 @@
                 dataLayer.push({ items: null });
                 dataLayer.push({
                     'event': 'view_item_list',
-                    'item_list_name': productList,          // List name from the clicked element
+                   // 'item_list_name': productList,          // List name from the clicked element
                     items  // Dynamic impressions array
 
                 
